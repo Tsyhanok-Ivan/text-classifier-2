@@ -6,6 +6,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.pipeline import Pipeline
 
 
+# категорії які є: Технології, Транспорт, Історія, Спорт та Ігра
 # чистимо текст
 def text_cleaner(text):
     text = text.lower()
@@ -47,7 +48,7 @@ def openai():
     text_clf.fit(D['train']['x'], D['train']['y'])
     predicted = text_clf.predict(D['train']['x'])
     # тест
-    z = input('Введіть текст для класифікації: ')
+    z = input('Категорії які є: Технології, Транспорт, Історія, Спорт та Ігра\nВведіть текст для класифікації: ')
     zz = []
     zz.append(z)
     predicted = text_clf.predict(zz)
