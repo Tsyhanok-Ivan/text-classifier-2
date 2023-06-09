@@ -1,4 +1,5 @@
 import numpy as np
+import random
 import re
 from Stemmer import Stemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -14,15 +15,19 @@ def text_cleaner(text):
     text = ' '.join(stemmer.stemWords(text.split()))
     text = re.sub(r'\b\d+\b', 'digit', text)
 
-
 # завантаження даних
 def load_data():
     data = {'text': [], 'tag': []}
-    for line in open('dataset.txt'):
-        if not ('#' in line):
-            row = line.split("@")
-            data['text'] += [row[0]]
-            data['tag'] += [row[1]]
+    lines = []
+    with open('txt.txt') as file:
+        for line in file:
+            if not '#' in line:
+                lines.append(line)
+    random.shuffle(lines)
+    for line in lines:
+        row = line.split("@")
+        data['text'] += [row[0]]
+        data['tag'] += [row[1]]
     return data
 
 
@@ -48,10 +53,26 @@ def openai():
     text_clf.fit(D['train']['x'], D['train']['y'])
     predicted = text_clf.predict(D['train']['x'])
     # тест
-    z = input('Категорії які є: Технології, Транспорт, Історія, Спорт та Ігра\nВведіть текст для класифікації: ')
+    z = input('Введіть текст для класифікації: ')
     zz = []
     zz.append(z)
     predicted = text_clf.predict(zz)
     print(predicted[0])
+    # print(data)
 
-openai()
+
+question = input("Ви бажаєте увімкнути нескінченний цикл передбачень (т/н)?")
+infinite_prediction = False
+
+if question == "т":
+    print("\nКатегорії які є: Технології, Транспорт, Історія, Спорт та Ігра\n")
+    infinite_prediction = True
+elif question == "н":
+    print("\nКатегорії які є: Технології, Транспорт, Історія, Спорт та Ігра\n")
+    openai()
+else:
+    print("Помилка!")
+
+
+while infinite_prediction:
+     openai()
