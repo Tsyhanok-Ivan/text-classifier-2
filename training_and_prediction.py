@@ -19,7 +19,7 @@ def text_cleaner(text):
 def load_data():
     data = {'text': [], 'tag': []}
     lines = []
-    with open('txt.txt') as file:
+    with open('dataset.txt') as file:
         for line in file:
             if not '#' in line:
                 lines.append(line)
