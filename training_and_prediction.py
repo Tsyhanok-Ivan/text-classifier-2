@@ -15,6 +15,7 @@ def text_cleaner(text):
     text = ' '.join(stemmer.stemWords(text.split()))
     text = re.sub(r'\b\d+\b', 'digit', text)
 
+
 # завантаження даних
 def load_data():
     data = {'text': [], 'tag': []}
@@ -46,6 +47,7 @@ def train_test_split(data, validation_split=0.1):
 
 def openai():
     data = load_data()
+    # print(data)
     D = train_test_split(data)
     text_clf = Pipeline([
         ('tfidf', TfidfVectorizer()),
@@ -58,7 +60,6 @@ def openai():
     zz.append(z)
     predicted = text_clf.predict(zz)
     print(predicted[0])
-    # print(data)
 
 
 question = input("Ви бажаєте увімкнути нескінченний цикл передбачень (т/н)?")
@@ -73,6 +74,5 @@ elif question == "н":
 else:
     print("Помилка!")
 
-
 while infinite_prediction:
-     openai()
+    openai()
